@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import "react-toastify/dist/ReactToastify.css";
 import {
   Card,
   CardContent,
@@ -9,21 +10,41 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { login } from "@/http/api";
+import { useMutation } from "@tanstack/react-query";
+// import { useMutation } from "@tanstack/react-query";
 import { useRef } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
+
+  const mutation = useMutation({
+    mutationFn: login,
+    onSuccess: () => {
+      console.log("success");
+      toast.success("Login successful!");
+      navigate("/dashboard/home");
+    },
+  });
 
   const handleLoginSubmit = () => {
     const email = emailRef.current?.value;
     const password = passwordRef.current?.value;
     console.log("data", { email, password });
 
-    // make server log
-  };
+    if (!email || !password) {
+      // toast.error("Please enter email and password");
+      // return;
+      return alert("Please enter email and password");
+    }
 
+    mutation.mutate({ email, password });
+  };
   return (
     <div>
       <div className="flex justify-center items-center h-screen bg-slate-200">
