@@ -33,13 +33,21 @@ import {
 } from "lucide-react";
 
 import { Link, Navigate, Outlet } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const DashboardLayout = () => {
-  const token = useTokenStore((state) => state.token);
+  const { token, setToken } = useTokenStore((state) => state);
 
   if (token === "") {
     return <Navigate to={"/auth/login"} />;
   }
+
+  const logout = () => {
+    setToken("");
+    localStorage.removeItem("token");
+    toast.success("Logout Successfully");
+    window.location.href = "/auth/login";
+  };
 
   return (
     <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
@@ -196,7 +204,9 @@ const DashboardLayout = () => {
               <DropdownMenuItem>Settings</DropdownMenuItem>
               <DropdownMenuItem>Support</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem>
+                <button onClick={logout}>Logout</button>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </header>
