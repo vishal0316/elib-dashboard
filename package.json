@@ -28,7 +28,8 @@
     "react-toastify": "^10.0.5",
     "sort-by": "^1.2.0",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zustand": "^4.5.2"
   },
   "devDependencies": {
     "@types/node": "^20.12.8",
