@@ -15,8 +15,8 @@ export function convertToFormattableDate(dateString: string): string {
     hour: "2-digit",
     minute: "2-digit",
     second: "2-digit",
-    timeZone: "UTC",
+    timeZone: "IST",
   };
 
-  return date.toLocaleString("en-US", options);
+  return date.toLocaleString("en-IN", options);
 }
