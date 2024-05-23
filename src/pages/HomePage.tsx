@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -15,9 +16,11 @@ const HomePage = () => {
             You have no books
           </h3>
           <p className="text-sm text-muted-foreground">
-            You can start selling as soon as you add a book.
+            You can start sharing as soon as you add a book.
           </p>
-          <Button className="mt-4">Add Book</Button>
+          <Link to="/dashboard/books/create">
+            <Button className="mt-4">Add Book</Button>
+          </Link>
         </div>
       </div>
     </>

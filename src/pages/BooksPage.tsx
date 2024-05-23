@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { getBooks } from "@/http/api";
-import { useQuery } from "@tanstack/react-query";
+import { getBooks, deleteBook } from "@/http/api";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { convertToFormattableDate } from "@/lib/utils";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -34,19 +35,33 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
-import { CirclePlus, MoreHorizontal, Search } from "lucide-react"; // Import the Search icon
+import { CirclePlus, MoreHorizontal, Search } from "lucide-react";
 import { Book } from "@/types";
 import { Link } from "react-router-dom";
-import { Input } from "@/components/ui/input"; // Adjust this path to where your Input component is located
+import { Input } from "@/components/ui/input";
 
 const BooksPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const queryClient = useQueryClient();
+
   const { data, isLoading, isError } = useQuery({
     queryKey: ["books"],
     queryFn: getBooks,
     staleTime: 10000,
   });
-  console.log("data", data);
+
+  const deleteMutation = useMutation({
+    mutationFn: (id: string) => deleteBook(id),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["books"] });
+    },
+  });
+
+  const handleDelete = (id: string) => {
+    if (window.confirm("Are you sure you want to delete this book?")) {
+      deleteMutation.mutate(id);
+    }
+  };
 
   const filteredBooks = data?.data.filter((book: Book) =>
     book.title.toLowerCase().includes(searchQuery.toLowerCase())
@@ -157,7 +172,7 @@ const BooksPage = () => {
                           {book.author.name}
                         </TableCell>
                         <TableCell className="hidden md:table-cell">
-                          {new Date(book.createdAt).toLocaleDateString()}
+                          {convertToFormattableDate(book.createdAt)}
                         </TableCell>
                         <TableCell>
                           <DropdownMenu>
@@ -180,8 +195,14 @@ const BooksPage = () => {
                               >
                                 Download
                               </DropdownMenuItem>
-                              <DropdownMenuItem>Edit</DropdownMenuItem>
-                              <DropdownMenuItem>Delete</DropdownMenuItem>
+                              <Link to={`/dashboard/books/edit/${book._id}`}>
+                                <DropdownMenuItem>Edit</DropdownMenuItem>
+                              </Link>
+                              <DropdownMenuItem
+                                onClick={() => handleDelete(book._id)}
+                              >
+                                Delete
+                              </DropdownMenuItem>
                             </DropdownMenuContent>
                           </DropdownMenu>
                         </TableCell>

@@ -1,8 +1,8 @@
+// api.ts
 import axios from "axios";
 import useTokenStore from "@/store";
 
 const api = axios.create({
-  // todo: move this value to env variable.
   baseURL: "http://localhost:5513",
   headers: {
     "Content-Type": "application/json",
@@ -28,9 +28,20 @@ export const register = async (data: {
 
 export const getBooks = async () => api.get("/api/books");
 
+export const getBook = async (id: string) => api.get(`/api/books/${id}`);
+
 export const createBook = async (data: FormData) =>
   api.post("/api/books", data, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
   });
+
+export const editBook = async (id: string, data: FormData) =>
+  api.put(`/api/books/${id}`, data, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+export const deleteBook = async (id: string) => api.delete(`/api/books/${id}`);
