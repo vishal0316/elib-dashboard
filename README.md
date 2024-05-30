@@ -1,3 +1,7 @@
+## Backend Repository
+
+The backend code for this project can be found in a separate repository [here](https://github.com/vishal0316/elib-apis).
+
 # eLib Book Project
 
 eLib is a web application built using the MERN stack and TypeScript, allowing users to manage their personal library of PDF books. Users can upload, download, delete, and edit their book entries. The application also supports account creation and login, featuring dark and light themes.
@@ -18,9 +22,7 @@ eLib is a web application built using the MERN stack and TypeScript, allowing us
 - **Storage**: Cloudinary
 - **Authentication**: JSON Web Tokens (JWT)
 
-## Backend Repository
 
-The backend code for this project can be found in a separate repository [here](https://github.com/vishal0316/elib-apis).
 
 ## Contributing
 
