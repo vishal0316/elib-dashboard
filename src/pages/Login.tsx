@@ -18,6 +18,7 @@ import { useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { LoaderCircle } from "lucide-react";
+import GridPattern from "@/components/magicui/animated-grid-pattern";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -59,7 +60,7 @@ const LoginPage = () => {
   };
   return (
     <div>
-      <div className="flex justify-center items-center h-screen bg-slate-200">
+      <div className="flex justify-center items-center h-screen">
         <Card className="w-full max-w-sm">
           <CardHeader>
             <CardTitle className="text-2xl">Login</CardTitle>
@@ -111,6 +112,7 @@ const LoginPage = () => {
             </div>
           </CardFooter>
         </Card>
+        <GridPattern className="-z-20" />
       </div>
     </div>
   );

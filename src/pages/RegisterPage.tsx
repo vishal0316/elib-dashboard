@@ -1,3 +1,4 @@
+import GridPattern from "@/components/magicui/animated-grid-pattern";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -97,6 +98,7 @@ const RegisterPage = () => {
           </div>
         </CardContent>
       </Card>
+      <GridPattern className="-z-20" />
     </section>
   );
 };
